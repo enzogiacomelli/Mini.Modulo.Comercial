@@ -1,0 +1,6 @@
+@Mini.Modulo.Comercial.API_HostAddress = http://localhost:5147
+
+GET {{Mini.Modulo.Comercial.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

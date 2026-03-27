@@ -1,0 +1,23 @@
+NOTAS
+
+
+dotnet clean
+dotnet build
+------------------------------------------------
+dotnet tool install --global dotnet-ef
+
+instala a ferramenta de linha de comando do Entity Framework Core, que é usada para criar e aplicar migrações, bem como para outras tarefas relacionadas ao banco de dados.
+
+------------------------------------------------
+dotnet ef migrations add InitialCreate (exemplo de inicio)
+dotnet ef migrations add <NomeDaAlteracao>
+
+analisa os models
+gera arquivos de migração
+atualiza a pasta migrations com os novos arquivos
+sempre que alterar algo nos models, atualizar o banco via migrations
+
+------------------------------------------------
+dotnet ef database update
+
+faz atualização da base executando a migration criada anteriormente, criando ou alterando as tabelas conforme necessário.
