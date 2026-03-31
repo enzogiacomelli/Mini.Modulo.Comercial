@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Mini.Modulo.Comercial.API.Data;
+using Mini.Modulo.Comercial.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=MiniModuloComercialDb;Trusted_Connection=True;"));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 var app = builder.Build();
 

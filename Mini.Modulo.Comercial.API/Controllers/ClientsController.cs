@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Mini.Modulo.Comercial.API.Data;
 using Mini.Modulo.Comercial.API.DTOs;
 using Mini.Modulo.Comercial.API.Models;
@@ -22,6 +21,13 @@ namespace Mini.Modulo.Comercial.API.Controllers
         {
             var clients = _context.Clients.ToList();
             return Ok(clients);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var client = _context.Clients.SingleOrDefault(x => x.Id == id);
+            return Ok(client);
         }
 
         [HttpPost]
