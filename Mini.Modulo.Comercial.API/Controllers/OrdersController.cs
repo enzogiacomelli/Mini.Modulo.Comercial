@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Mini.Modulo.Comercial.API.DTOs;
 using Mini.Modulo.Comercial.API.Models;
 using Mini.Modulo.Comercial.API.Services;
@@ -23,7 +24,7 @@ namespace Mini.Modulo.Comercial.API.Controllers
             try
             {
                 order = _orderService.CreateOrder(dto);
-                return Ok("Order created! Order id: " + order.Id);
+                return CreatedAtAction(nameof(Get), new { id = order.Id }, order);
             }
             catch (Exception ex)
             {
