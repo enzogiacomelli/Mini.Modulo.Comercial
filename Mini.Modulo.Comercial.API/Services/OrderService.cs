@@ -28,6 +28,20 @@ namespace Mini.Modulo.Comercial.API.Services
             return orders;
         }
 
+        public Order GetOrder(int id)
+        {
+            var order = _context.Orders.SingleOrDefault(o => o.Id == id);
+            if (order != null)
+            {
+                order.Items = _context.OrderItems.Where(i => i.OrderId == order.Id).ToList();
+                return order;
+            }
+            else
+            {
+                throw new Exception($"Pedido com id {id} não encontrado");
+            }
+        }
+
         public Order CreateOrder(CreateOrderDto dto)
         {
             var order = new Order()

@@ -19,6 +19,7 @@ namespace Mini.Modulo.Comercial.API.Controllers
         [HttpPost]
         public IActionResult Post(CreateOrderDto dto)
         {
+
             Order order = new Order();
             order = _orderService.CreateOrder(dto);
             return Ok("Order created! Order id: " + order.Id);
@@ -27,8 +28,29 @@ namespace Mini.Modulo.Comercial.API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            List<Order> orders = _orderService.GetOrders();
-            return Ok(orders);
+            try
+            {
+                List<Order> orders = _orderService.GetOrders();
+                return Ok(orders);
+            } catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            try
+            {
+                Order order = _orderService.GetOrder(id);
+                return Ok(order);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
     }
 }

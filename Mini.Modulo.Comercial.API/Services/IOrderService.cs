@@ -8,5 +8,7 @@ namespace Mini.Modulo.Comercial.API.Services
         Order CreateOrder(CreateOrderDto dto);
 
         List<Order> GetOrders();
+
+        Order GetOrder(int id);
     }
 }
