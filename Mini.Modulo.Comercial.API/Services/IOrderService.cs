@@ -6,5 +6,7 @@ namespace Mini.Modulo.Comercial.API.Services
     public interface IOrderService
     {
         Order CreateOrder(CreateOrderDto dto);
+
+        List<Order> GetOrders();
     }
 }

@@ -23,5 +23,12 @@ namespace Mini.Modulo.Comercial.API.Controllers
             order = _orderService.CreateOrder(dto);
             return Ok("Order created! Order id: " + order.Id);
         }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            List<Order> orders = _orderService.GetOrders();
+            return Ok(orders);
+        }
     }
 }

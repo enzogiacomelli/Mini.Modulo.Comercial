@@ -13,6 +13,21 @@ namespace Mini.Modulo.Comercial.API.Services
             _context = context;
         }
 
+        public List<Order> GetOrders()
+        {
+            var orders = new List<Order>();
+            var items = new List<OrderItem>();
+            orders = _context.Orders.ToList();
+            items = _context.OrderItems.ToList();
+
+            for (int i = 0; i < orders.Count; i++)
+            {
+                orders[i].Items = items.Where(x => x.OrderId == orders[i].Id).ToList();
+            }
+
+            return orders;
+        }
+
         public Order CreateOrder(CreateOrderDto dto)
         {
             var order = new Order()
