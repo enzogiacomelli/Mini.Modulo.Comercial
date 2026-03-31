@@ -19,15 +19,29 @@ namespace Mini.Modulo.Comercial.API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var clients = _context.Clients.ToList();
-            return Ok(clients);
+            try
+            {
+                var clients = _context.Clients.ToList();
+                return Ok(clients);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var client = _context.Clients.SingleOrDefault(x => x.Id == id);
-            return Ok(client);
+            try
+            {
+                var client = _context.Clients.SingleOrDefault(x => x.Id == id);
+                return Ok(client);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpPost]
@@ -43,10 +57,16 @@ namespace Mini.Modulo.Comercial.API.Controllers
                 Email = dto.Email
             };
 
-            _context.Clients.Add(client);
-            _context.SaveChanges();
-
-            return CreatedAtAction(nameof(Get), new { id = client.Id }, client);
+            try
+            {
+                _context.Clients.Add(client);
+                _context.SaveChanges();
+                return CreatedAtAction(nameof(Get), new { id = client.Id }, client);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

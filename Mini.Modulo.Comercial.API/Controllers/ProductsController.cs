@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Mini.Modulo.Comercial.API.Data;
 using Mini.Modulo.Comercial.API.Models;
 using Mini.Modulo.Comercial.API.DTOs;
@@ -20,8 +19,15 @@ namespace Mini.Modulo.Comercial.API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var products = _context.Products.ToList();
-            return Ok(products);
+            try
+            {
+                var products = _context.Products.ToList();
+                return Ok(products);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpPost]
@@ -38,11 +44,17 @@ namespace Mini.Modulo.Comercial.API.Controllers
                 Price = dto.Price
             };
 
-            _context.Products.Add(product);
-            _context.SaveChanges();
+            try
+            {
+                _context.Products.Add(product);
+                _context.SaveChanges();
 
-            return CreatedAtAction(nameof(Get), new { id = product.Id }, product);
+                return CreatedAtAction(nameof(Get), new { id = product.Id }, product);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-
     }
 }
