@@ -1,1 +1,61 @@
-<button (click)="create()">Criar Pedido</button>
+<div class="create-order">
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+  <div class="field-group">
+    <label for="client-select">Cliente</label>
+    <select id="client-select" [(ngModel)]="selectedClientId">
+      <option [ngValue]="null">Selecione um cliente</option>
+      <option *ngFor="let client of clients" [ngValue]="client.id">
+        {{ client.name || client.businessName || client.id }}
+      </option>
+    </select>
+  </div>
+
+  <div class="field-group product-entry">
+    <label for="product-select">Produto</label>
+    <select id="product-select" [(ngModel)]="selectedProductId">
+      <option [ngValue]="null">Selecione um produto</option>
+      <option *ngFor="let product of products" [ngValue]="product.id">
+        {{ product.name || product.description || product.id }}
+      </option>
+    </select>
+
+    <label for="quantity-input">Quantidade</label>
+    <input
+      id="quantity-input"
+      type="number"
+      min="1"
+      [(ngModel)]="selectedQuantity"
+    />
+
+    <button type="button" (click)="addProduct()" [disabled]="!selectedProductId || selectedQuantity < 1">
+      Adicionar item
+    </button>
+  </div>
+
+  <div *ngIf="productItems.length > 0" class="items-list">
+    <h3>Itens do pedido</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Produto</th>
+          <th>Quantidade</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of productItems; let i = index">
+          <td>{{ getProductName(item.productId) }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>
+            <button type="button" (click)="removeProduct(i)">Remover</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <button type="button" (click)="create()" [disabled]="isLoading">
+    {{ isLoading ? 'Criando...' : 'Criar Pedido' }}
+  </button>
+</div>
